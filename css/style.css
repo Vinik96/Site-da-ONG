@@ -1,13 +1,52 @@
 /* ==================== VARIÁVEIS DO PROJETO ==================== */
 :root {
-	--blue: #3977b8;
-	--blue-button: #5d98d9;
-	--blue-hover: #6aa5e4;
-	--yellow: #ffc928;
-	--page-gray: #e5e5e5;
-	--text: #111111;
-	--white: #ffffff;
-	--shadow: 2px 3px 2px rgba(0, 0, 0, .25);
+	--color-brand: #3977b8;
+	--color-brand-button: #5d98d9;
+	--color-brand-hover: #6aa5e4;
+	--color-accent: #ffc928;
+	--color-accent-hover: #e5b524;
+	--color-surface: #e5e5e5;
+	--color-surface-raised: #ffffff;
+	--color-surface-muted: #eeeeee;
+	--color-surface-input: #ffffff;
+	--color-text: #111111;
+	--color-text-inverse: #ffffff;
+	--color-text-muted: #555555;
+	--color-border: #cccccc;
+	--color-disabled: #a0a0a0;
+	--color-success: #28a745;
+	--color-success-dark: #246b36;
+	--color-success-strong: #2e7d32;
+	--color-success-surface: #f0fff4;
+	--color-success-soft: #e6f4ea;
+	--color-success-alert: #eaf5ed;
+	--color-success-border: #a8d5b2;
+	--color-error: #dc3545;
+	--color-error-dark: #9f2d28;
+	--color-error-surface: #fff3f3;
+	--color-error-alert: #fcebea;
+	--color-error-border: #e6aaa7;
+	--color-pending: #805b00;
+	--color-pending-surface: #fff4d6;
+	--color-new-surface: #e6f2ff;
+	--color-card-overlay: #222222;
+	--color-project-title: rgb(74 143 211 / 80%);
+	--color-project-description: rgb(220 161 0 / 85%);
+	--color-registration-title: rgb(243 180 5 / 85%);
+	--color-registration-title-text: rgb(99 74 7 / 85%);
+	--color-scrim: rgb(0 0 0 / 62%);
+	--color-shadow: rgb(0 0 0 / 25%);
+	--shadow-control: 2px 3px 2px var(--color-shadow);
+	--shadow-toast: 0 8px 24px rgb(0 0 0 / 18%);
+	--shadow-modal: 0 16px 40px var(--color-shadow);
+	--space-1: 4px;
+	--space-2: 8px;
+	--space-3: 12px;
+	--space-4: 16px;
+	--space-5: 20px;
+	--space-6: 24px;
+	--space-7: 32px;
+	--space-8: 36px;
 }
 
 /* ==================== RESET E ELEMENTOS GERAIS ==================== */
@@ -22,8 +61,8 @@ html {
 }
 
 body {
-	background: var(--page-gray);
-	color: var(--text);
+	background: var(--color-surface);
+	color: var(--color-text);
 	font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -46,7 +85,7 @@ main {
 /* ==================== INTERATIVIDADE DOS BOTÕES ==================== */
 /* 1. Hover do botão de formulário (o nav-button já tem o dele) */
 input[type="submit"]:hover {
-    background-color: #e5b524; /* Amarelo um pouco mais escuro */
+	background-color: var(--color-accent-hover);
     transform: translateY(-1px);
     transition: background-color 0.2s ease, transform 0.2s ease;
 }
@@ -54,7 +93,7 @@ input[type="submit"]:hover {
 /* 2. Focus: Acessibilidade via teclado para ambos os botões */
 .nav-button:focus,
 input[type="submit"]:focus {
-    outline: 2px solid var(--text);
+	outline: 2px solid var(--color-text);
     outline-offset: 2px;
 }
 
@@ -68,8 +107,8 @@ input[type="submit"]:active {
 /* 4. Disabled: Estado inativo / desabilitado */
 .nav-button:disabled,
 input[type="submit"]:disabled {
-    background-color: #a0a0a0;
-    color: #e5e5e5;
+    background-color: var(--color-disabled);
+	color: var(--color-text-inverse);
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
@@ -83,27 +122,27 @@ input[type="submit"]:disabled {
 /* 1. Focus: Destaque visual enquanto o usuário digita no campo */
 .form-row input:focus {
     outline: none;
-    border: 2px solid var(--blue-button);
-    background-color: #ffffff;
+	border: 2px solid var(--color-brand-button);
+	background-color: var(--color-surface-input);
 }
 
 /* 2. Sucesso: mostra verde depois da interação, se o valor for válido. */
 .form-row input:user-valid {
-    border: 2px solid #28a745;
-    background-color: #f0fff4;
-    color: var(--text);
+	border: 2px solid var(--color-success);
+	background-color: var(--color-success-surface);
+	color: var(--color-text);
 }
 
 /* 3. Erro: mostra vermelho depois da interação, se o valor for inválido. */
 .form-row input:user-invalid {
-    border: 2px solid #dc3545;
-    background-color: #fff3f3;
-    color: var(--text);
+	border: 2px solid var(--color-error);
+	background-color: var(--color-error-surface);
+	color: var(--color-text);
 }
 
 /* ==================== CABEÇALHO E NAVEGAÇÃO ==================== */
 header {
-	background: var(--blue);
+	background: var(--color-brand);
 	min-height: 70px;
 	padding: 18px 18px;
 	position: sticky;
@@ -114,7 +153,7 @@ header {
 .navbar {
 	align-items: center;
 	display: grid;
-	gap: 36px;
+	gap: var(--space-8);
 	grid-template-columns: 90px 1fr;
 	margin: 0 auto;
 	max-width: 1080px;
@@ -130,24 +169,24 @@ header {
 .nav-links {
 	align-items: center;
 	display: grid;
-	gap: 34px;
+	gap: var(--space-8);
 	grid-template-columns: repeat(3, max-content);
 	justify-content: center;
 }
 
 .nav-button {
-	background: var(--blue-button);
+	background: var(--color-brand-button);
 	border-radius: 10px;
-	box-shadow: var(--shadow);
-	color: var(--white);
+	box-shadow: var(--shadow-control);
+	color: var(--color-text-inverse);
 	font-size: 24px;
-	padding: 8px 14px;
+	padding: var(--space-2) 14px;
 	transition: background-color .2s ease, transform .2s ease;
 }
 
 .nav-button:hover,
 .nav-button.active {
-	background: var(--blue-hover);
+	background: var(--color-brand-hover);
 	transform: translateY(-1px);
 }
 
@@ -162,15 +201,15 @@ header {
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: var(--blue-button);
+	background-color: var(--color-brand-button);
     min-width: 160px;
-    box-shadow: var(--shadow);
+	box-shadow: var(--shadow-control);
     border-radius: 8px;
     z-index: 10;
 }
 
 .dropdown-menu a {
-    color: var(--white);
+	color: var(--color-text-inverse);
     padding: 10px 14px;
     display: block;
 }
@@ -210,7 +249,7 @@ header {
 		grid-column: 2;
 		grid-row: 1;
         font-size: 28px;
-        color: var(--white);
+		color: var(--color-text-inverse);
         cursor: pointer;
 		justify-self: end;
 		line-height: 1;
@@ -223,7 +262,7 @@ header {
 		grid-row: 2;
 		grid-template-columns: 1fr;
 		width: 100%;
-		background-color: var(--blue);
+		background-color: var(--color-brand);
 		position: absolute;
 		top: calc(100% + 18px);
 		left: 0;
@@ -269,26 +308,26 @@ header {
 
 /* Texto de boas-vindas sobre a faixa amarela incorporada à imagem. */
 .hero h1 {
-	color: var(--white);
+	color: var(--color-text-inverse);
 	font-size: 48px;
 	font-weight: 500;
 	padding: 10px 26px;
 	position: absolute;
 	right: var(--hero-title-right, 64px);
 	text-align: center;
-	text-shadow: 1px 1px 2px #555;
+	text-shadow: 1px 1px 2px var(--color-text-muted);
 	top: var(--hero-title-top, 70px);
 }
 
 /* Cada parágrafo possui posição própria para acompanhar a faixa diagonal. */
 .hero-copy {
-	color: var(--white);
+	color: var(--color-text-inverse);
 	font-size: 20px;
 	height: 100%;
 	left: 0;
 	line-height: 10px;
 	position: absolute;
-	text-shadow: 1px 1px 2px #555;
+	text-shadow: 1px 1px 2px var(--color-text-muted);
 	top: 0;
 	width: 50%;
 }
@@ -309,14 +348,14 @@ header {
 /* ==================== PÁGINA DE PROJETOS ==================== */
 .project-grid {
 	display: grid;
-	gap: 20px;
+	gap: var(--space-5);
 	grid-template-columns: repeat(12, 1fr);
-	padding: 0 20px;
+	padding: 0 var(--space-5);
 }
 
 .project-card {
 	aspect-ratio: 192 / 241;
-	background: #222;
+	background: var(--color-card-overlay);
 	grid-column: span 12;
 	overflow: hidden;
 	position: relative;
@@ -339,43 +378,43 @@ header {
 
 /* O título cresce junto com o padding para manter o botão equilibrado. */
 .project-content h1 {
-	background: rgba(74, 143, 211, .8);
+	background: var(--color-project-title);
 	border-radius: 12px;
-	color: var(--white);
+	color: var(--color-text-inverse);
 	display: table;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: clamp(1.1rem, 2vw, 1.45rem);
 	font-weight: 400;
-	margin: 0 auto 8px;
-	padding: 12px 42px;
+	margin: 0 auto var(--space-2);
+	padding: var(--space-3) 42px;
 }
 
 /* A descrição tem escala menor e padding proporcional ao seu tamanho. */
 .project-content p {
-	background: rgba(220, 161, 0, .85);
+	background: var(--color-project-description);
 	border-radius: 10px;
-	color: var(--white);
+	color: var(--color-text-inverse);
 	display: table;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: clamp(.85rem, 1.35vw, 1rem);
 	font-weight: 400;
 	margin: 0 auto;
-	padding: 8px 12px;
+	padding: var(--space-2) var(--space-3);
 }
 
 /* ==================== PÁGINA DE CADASTRO ==================== */
 .registration-section {
-	background: var(--page-gray);
+	background: var(--color-surface);
 	min-height: calc(100vh - 70px);
 	padding: 10px 8px;
 	text-align: center;
 }
 
 .registration-section > h1 {
-	background: rgba(243, 180, 5, .85);
-	border: 1px solid rgba(243, 180, 5, .85);
+	background: var(--color-registration-title);
+	border: 1px solid var(--color-registration-title);
 	border-radius: 4px;
-	color: rgba(99, 74, 7, 0.85);
+	color: var(--color-registration-title-text);
 	display: inline-block;
 	font-size: 14px;
 	font-weight: 400;
@@ -388,7 +427,7 @@ header {
 }
 
 .registration-section > fieldset {
-	border: 3px solid var(--text);
+	border: 3px solid var(--color-text);
 	border-radius: 6px;
 	min-height: 325px;
 	padding: 5px 12px;
@@ -409,7 +448,7 @@ form {
 	align-items: center;
 	display: grid;
 	grid-template-columns: 145px 1fr;
-	margin-bottom: 8px;
+	margin-bottom: var(--space-2);
 	text-align: right;
 }
 
@@ -419,8 +458,8 @@ form {
 }
 
 input {
-	background: #eee;
-	border: 1px solid #ccc;
+	background: var(--color-surface-muted);
+	border: 1px solid var(--color-border);
 	border-radius: 2px;
 	font: inherit;
 	font-size: 14px;
@@ -455,9 +494,9 @@ input {
 }
 
 input[type="submit"] {
-	background: var(--yellow);
+	background: var(--color-accent);
 	border: 0;
-	color: var(--white);
+	color: var(--color-text-inverse);
 	cursor: pointer;
 	font-size: 14px;
 	height: auto;
@@ -676,11 +715,11 @@ input[type="submit"] {
 
 /* Os componentes ficam isolados para não alterar os estilos das outras páginas. */
 .feedback-components-test {
-    --feedback-blue: var(--blue, #3977b8);
-    --feedback-blue-light: var(--blue-button, #5d98d9);
-    --feedback-yellow: var(--yellow, #ffc928);
-    --feedback-text: var(--text, #111111);
-    --feedback-white: #ffffff;
+	--feedback-blue: var(--color-brand);
+	--feedback-blue-light: var(--color-brand-button);
+	--feedback-yellow: var(--color-accent);
+	--feedback-text: var(--color-text);
+	--feedback-white: var(--color-surface-raised);
 
     color: var(--feedback-text);
     font-family: Arial, Helvetica, sans-serif;
@@ -692,7 +731,7 @@ input[type="submit"] {
 
 .feedback-section {
     display: grid;
-    gap: 24px;
+	gap: var(--space-6);
 }
 
 .feedback-section h2 {
@@ -701,7 +740,7 @@ input[type="submit"] {
 
 .feedback-group {
     display: grid;
-    gap: 12px;
+	gap: var(--space-3);
 }
 
 .feedback-group h3 {
@@ -728,22 +767,22 @@ input[type="submit"] {
 }
 
 .feedback-badge--new {
-    background: #e6f2ff;
+	background: var(--color-new-surface);
     color: var(--feedback-blue);
 	--badge-offset-x: 0;
 	--badge-offset-y: -6px;
 }
 
 .feedback-badge--pending {
-    background: #fff4d6;
-    color: #805b00;
+	background: var(--color-pending-surface);
+	color: var(--color-pending);
 	--badge-offset-x: 0;
 	--badge-offset-y: -6px;
 }
 
 .feedback-badge--complete {
-    background: #e6f4ea;
-    color: #246b36;
+	background: var(--color-success-soft);
+	color: var(--color-success-dark);
 	--badge-offset-x: 0;
 	--badge-offset-y: -6px;
 }
@@ -754,9 +793,9 @@ input[type="submit"] {
     border: 1px solid transparent;
     border-radius: 6px;
     display: grid;
-    gap: 12px;
+	gap: var(--space-3);
     grid-template-columns: auto 1fr;
-    padding: 14px 16px;
+	padding: 14px var(--space-4);
     width: 100%;
 }
 
@@ -766,15 +805,15 @@ input[type="submit"] {
 }
 
 .feedback-alert--success {
-    background: #eaf5ed;
-    border-color: #a8d5b2;
-    color: #246b36;
+	background: var(--color-success-alert);
+	border-color: var(--color-success-border);
+	color: var(--color-success-dark);
 }
 
 .feedback-alert--error {
-    background: #fcebea;
-    border-color: #e6aaa7;
-    color: #9f2d28;
+	background: var(--color-error-alert);
+	border-color: var(--color-error-border);
+	color: var(--color-error-dark);
 }
 
 .feedback-alert__icon {
@@ -792,22 +831,22 @@ input[type="submit"] {
 .feedback-toast {
     align-items: start;
     background: var(--feedback-white);
-    border-left: 5px solid #2e7d32;
+	border-left: 5px solid var(--color-success-strong);
     border-radius: 6px;
     bottom: 24px;
-    box-shadow: 0 8px 24px rgb(0 0 0 / 18%);
+	box-shadow: var(--shadow-toast);
     display: grid;
     gap: 12px;
     grid-template-columns: auto 1fr;
     max-width: min(360px, calc(100vw - 32px));
-    padding: 16px;
+	padding: var(--space-4);
     position: fixed;
     right: 24px;
     z-index: 1200;
 }
 
 .feedback-toast__icon {
-    color: #2e7d32;
+	color: var(--color-success-strong);
     font-size: 20px;
     font-weight: 700;
 }
@@ -815,7 +854,7 @@ input[type="submit"] {
 /* Área escurecida de demonstração mantém o modal visível sem cobrir a galeria. */
 .feedback-modal-preview {
     align-items: center;
-    background: rgb(0 0 0 / 62%);
+	background: var(--color-scrim);
     border-radius: 8px;
     display: grid;
     justify-items: center;
@@ -826,11 +865,11 @@ input[type="submit"] {
 .feedback-modal {
     background: var(--feedback-white);
     border-radius: 8px;
-    box-shadow: 0 16px 40px rgb(0 0 0 / 25%);
+	box-shadow: var(--shadow-modal);
     display: grid;
-    gap: 16px;
+	gap: var(--space-4);
     max-width: 420px;
-    padding: 24px;
+	padding: var(--space-6);
     width: 100%;
 }
 
