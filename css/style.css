@@ -439,6 +439,12 @@ header {
 	text-align: left;
 }
 
+.registration-section > .feedback-alert {
+	margin: var(--space-2) auto 0;
+	max-width: 390px;
+	text-align: left;
+}
+
 form {
 	margin: 10px auto 0;
 	max-width: 390px;
@@ -724,7 +730,7 @@ input[type="submit"] {
     color: var(--feedback-text);
     font-family: Arial, Helvetica, sans-serif;
     /* Mantém a demonstração abaixo do formulário, sem encobrir campos interativos. */
-    margin: 32px auto;
+    margin: 30px auto;
     max-width: 900px;
     padding: 5px;
 }
@@ -799,6 +805,10 @@ input[type="submit"] {
     width: 100%;
 }
 
+.feedback-alert[hidden] {
+	display: none;
+}
+
 .feedback-alert p,
 .feedback-toast p {
     margin: 0;
@@ -830,7 +840,7 @@ input[type="submit"] {
 /* Toast demonstrativo fixado no canto inferior direito da janela. */
 .feedback-toast {
     align-items: start;
-    background: var(--feedback-white);
+	background: var(--color-surface-raised);
 	border-left: 5px solid var(--color-success-strong);
     border-radius: 6px;
     bottom: 24px;
@@ -843,6 +853,10 @@ input[type="submit"] {
     position: fixed;
     right: 24px;
     z-index: 1200;
+}
+
+.feedback-toast[hidden] {
+	display: none;
 }
 
 .feedback-toast__icon {
@@ -863,14 +877,25 @@ input[type="submit"] {
 }
 
 .feedback-modal {
-    background: var(--feedback-white);
+    background: var(--color-surface-raised);
+	border: 0;
     border-radius: 8px;
 	box-shadow: var(--shadow-modal);
+	color: var(--color-text);
     display: grid;
 	gap: var(--space-4);
     max-width: 420px;
+	margin: auto;
 	padding: var(--space-6);
     width: 100%;
+}
+
+.feedback-modal:not([open]) {
+	display: none;
+}
+
+.feedback-modal::backdrop {
+	background: var(--color-scrim);
 }
 
 .feedback-modal h4 {
@@ -882,21 +907,21 @@ input[type="submit"] {
 }
 
 .feedback-modal__close {
-    background: var(--feedback-blue);
+	background: var(--color-brand);
     border: 0;
     border-radius: 5px;
-    color: var(--feedback-white);
+	color: var(--color-text-inverse);
     cursor: pointer;
     justify-self: end;
     padding: 10px 18px;
 }
 
 .feedback-modal__close:hover {
-    background: var(--feedback-blue-light);
+	background: var(--color-brand-button);
 }
 
 .feedback-modal__close:focus-visible {
-    outline: 3px solid var(--feedback-yellow);
+	outline: 3px solid var(--color-accent);
     outline-offset: 3px;
 }
 

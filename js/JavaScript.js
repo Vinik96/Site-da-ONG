@@ -17,6 +17,41 @@ function iniciarFormulario() {
 
   const form = document.querySelector('form');
   if (!form) return; // Se não houver formulário na página atual, encerra a validação
+  const successAlert = document.querySelector('#cadastro-alerta-sucesso');
+  const errorAlert = document.querySelector('#cadastro-alerta-erro');
+  const toast = document.querySelector('#cadastro-toast');
+  const toastMessage = document.querySelector('#cadastro-toast-mensagem');
+  const cadastroModal = document.querySelector('#cadastro-modal');
+  const closeModalButton = cadastroModal?.querySelector('.feedback-modal__close');
+  let toastTimeout;
+
+  function ocultarAlertas() {
+    if (successAlert) successAlert.hidden = true;
+    if (errorAlert) errorAlert.hidden = true;
+  }
+
+  function exibirAlerta(alerta) {
+    ocultarAlertas();
+    if (!alerta) return;
+    alerta.hidden = false;
+    alerta.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function exibirToast(input) {
+    if (!toast || !toastMessage) return;
+    const nomeCampo = input.labels?.[0]?.textContent.trim().replace(/:$/, '') || 'Campo';
+    toastMessage.textContent = `${nomeCampo} validado corretamente.`;
+    toast.hidden = false;
+    window.clearTimeout(toastTimeout);
+    toastTimeout = window.setTimeout(() => {
+      toast.hidden = true;
+    }, 3500);
+  }
+
+  function ocultarToast() {
+    if (toast) toast.hidden = true;
+    window.clearTimeout(toastTimeout);
+  }
 
   // 2. SELEÇÃO DOS ELEMENTOS
   const nameInput = document.querySelector('#nome');
@@ -76,16 +111,30 @@ function iniciarFormulario() {
     return true;
   }
 
+  function validarAoSair(input, regex, mensagem) {
+    if (!input) return;
+    input.addEventListener('blur', () => {
+      if (validarCampo(input, regex, mensagem) && !cadastroModal?.open) {
+        exibirToast(input);
+      }
+    });
+  }
+
   // EVENTOS DE BLUR
-  if (nameInput) nameInput.addEventListener('blur', () => validarCampo(nameInput, null, 'Insira seu nome completo'));
-  if (dateInput) dateInput.addEventListener('blur', () => validarCampo(dateInput, null, 'Insira sua data de nascimento'));
-  if (emailInput) emailInput.addEventListener('blur', () => validarCampo(emailInput, regexEmail, 'Insira um e-mail válido'));
-  if (cpfInput) cpfInput.addEventListener('blur', () => validarCampo(cpfInput, regexCpf, 'Insira um CPF válido'));
-  if (telefoneInput) telefoneInput.addEventListener('blur', () => validarCampo(telefoneInput, regexTelefone, 'Insira um telefone válido'));
-  if (cepInput) cepInput.addEventListener('blur', () => validarCampo(cepInput, regexCep, 'Insira um CEP válido'));
-  if (enderecoInput) enderecoInput.addEventListener('blur', () => validarCampo(enderecoInput, regexEndereco, 'Insira um endereço válido'));
-  if (cidadeInput) cidadeInput.addEventListener('blur', () => validarCampo(cidadeInput, regexCidade, 'Insira uma cidade válida'));
-  if (estadoInput) estadoInput.addEventListener('blur', () => validarCampo(estadoInput, regexEstado, 'Insira um estado válido'));
+  validarAoSair(nameInput, null, 'Insira seu nome completo');
+  validarAoSair(dateInput, null, 'Insira sua data de nascimento');
+  validarAoSair(emailInput, regexEmail, 'Insira um e-mail válido');
+  validarAoSair(cpfInput, regexCpf, 'Insira um CPF válido');
+  validarAoSair(telefoneInput, regexTelefone, 'Insira um telefone válido');
+  validarAoSair(cepInput, regexCep, 'Insira um CEP válido');
+  validarAoSair(enderecoInput, regexEndereco, 'Insira um endereço válido');
+  validarAoSair(cidadeInput, regexCidade, 'Insira uma cidade válida');
+  validarAoSair(estadoInput, regexEstado, 'Insira um estado válido');
+
+  closeModalButton?.addEventListener('click', () => cadastroModal.close());
+  cadastroModal?.addEventListener('click', event => {
+    if (event.target === cadastroModal) cadastroModal.close();
+  });
 
   // GERENCIAMENTO DE RASCUNHO (LOCALSTORAGE)
   function salvarRascunho() {
@@ -125,6 +174,8 @@ function iniciarFormulario() {
     .filter(Boolean)
     .forEach(el => el.addEventListener('input', salvarRascunho));
 
+  form.addEventListener('input', ocultarAlertas);
+
   // SUBMIT
   form.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -142,13 +193,12 @@ function iniciarFormulario() {
     ].every(Boolean);
 
     if (formValido) {
-      const formData = new FormData(form);
-      console.log('Dados interceptados:', Object.fromEntries(formData.entries()));
-      alert('Cadastro realizado com sucesso!');
-      form.reset();
-      localStorage.removeItem('meuRascunho');
+      exibirAlerta(successAlert);
+      ocultarToast();
+      if (cadastroModal && !cadastroModal.open) cadastroModal.showModal();
     } else {
-      alert('Por favor, preencha todos os campos corretamente.');
+      ocultarToast();
+      exibirAlerta(errorAlert);
     }
   });
 }

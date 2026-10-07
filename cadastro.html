@@ -37,7 +37,7 @@
             <p>Preencha o formulário abaixo para se tornar um voluntário em nossos projetos.</p>
             <fieldset>
                 <legend>Formulário de Cadastro</legend>
-                <form action="processar_cadastro.php" method="post">
+                <form action="processar_cadastro.php" method="post" novalidate>
                     <div class="form-row"><label for="nome">Nome:</label><input type="text" id="nome" name="nome" required></div>
                     <div class="form-row"><label for="data-nascimento">Data de Nascimento:</label><input type="date" id="data-nascimento" name="data-nascimento" required></div>
                     <div class="form-row"><label for="email">Email:</label><input type="email" id="email" name="email" required></div>
@@ -56,53 +56,24 @@
                     <input type="submit" value="Enviar">
                 </form>
             </fieldset>
+            <div id="cadastro-alerta-sucesso" class="feedback-alert feedback-alert--success" role="status" hidden>
+                <span class="feedback-alert__icon" aria-hidden="true">✓</span>
+                <p>Dados validados com sucesso. Seu cadastro está pronto para envio.</p>
+            </div>
+            <div id="cadastro-alerta-erro" class="feedback-alert feedback-alert--error" role="alert" hidden>
+                <span class="feedback-alert__icon" aria-hidden="true">!</span>
+                <p>Confira os campos destacados antes de continuar.</p>
+            </div>
         </section>
-        <!-- Badges, alertas, Toast e demonstração do modal --><!-- Badges, alertas, Toast e demonstração do modal -->
-        <div class="feedback-components-test">
-            <section class="feedback-section" aria-labelledby="feedback-title">
-
-                <section class="feedback-group" aria-labelledby="alerts-title">
-                    <h3 id="alerts-title">Alertas</h3>
-                    <div class="feedback-alert feedback-alert--success" role="status">
-                        <span class="feedback-alert__icon" aria-hidden="true">✓</span>
-                        <p><strong>Sucesso:</strong> seus dados foram salvos.</p>
-                    </div>
-                    <div class="feedback-alert feedback-alert--error" role="alert">
-                        <span class="feedback-alert__icon" aria-hidden="true">!</span>
-                        <p><strong>Erro:</strong> não foi possível concluir a operação.</p>
-                    </div>
-                </section>
-
-                <section class="feedback-group" aria-labelledby="toast-title">
-                    <h3 id="toast-title">Notificação toast</h3>
-                    <aside class="feedback-toast" role="status">
-                        <span class="feedback-toast__icon" aria-hidden="true">✓</span>
-                        <div>
-                            <strong>Dados salvos</strong>
-                            <p>Suas alterações foram salvas com sucesso.</p>
-                        </div>
-                    </aside>
-                </section>
-
-                <section class="feedback-group" aria-labelledby="modal-title">
-                    <h3 id="modal-title">Prévia do modal</h3>
-                    <div class="feedback-modal-preview">
-                        <article
-                            class="feedback-modal"
-                            role="dialog"
-                            aria-labelledby="modal-heading"
-                            aria-describedby="modal-description"
-                        >
-                            <h4 id="modal-heading">Alterações salvas</h4>
-                            <p id="modal-description">
-                                Seus dados foram atualizados com sucesso.
-                            </p>
-                            <button class="feedback-modal__close" type="button">Fechar</button>
-                        </article>
-                    </div>
-                </section>
-            </section>
-        </div>
+        <aside id="cadastro-toast" class="feedback-toast" role="status" aria-live="polite" hidden>
+            <span class="feedback-toast__icon" aria-hidden="true">✓</span>
+            <p id="cadastro-toast-mensagem">Campo validado corretamente.</p>
+        </aside>
+        <dialog id="cadastro-modal" class="feedback-modal" aria-labelledby="modal-heading" aria-describedby="modal-description">
+            <h2 id="modal-heading">Cadastro validado</h2>
+            <p id="modal-description">Todos os campos estão corretos. Seu cadastro está pronto para envio.</p>
+            <button class="feedback-modal__close" type="button">Fechar</button>
+        </dialog>
     </main>
 </body>
 </html>
