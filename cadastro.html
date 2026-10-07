@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quero Ajudar</title>
+
+    <!-- O CSS usa o nome real do arquivo existente na pasta css. -->
+    <link rel="stylesheet" href="css/style.css" media="all">
+    <!-- A biblioteca carrega antes do script da página e expõe IMask globalmente. -->
+    <script src="https://unpkg.com/imask" defer></script>
+    <script src="js/JavaScript.js" defer></script>
+</head>
+<body>
+    <!-- Cabeçalho compartilhado entre as páginas, inspirado no layout do Figma. -->
+    <header>
+        <nav class="navbar">
+            <a class="logo-link" href="index.html">
+                <img src="imagens/estrela.png" alt="Logo">
+            </a>
+
+            <!-- Botão Hambúrguer para Mobile -->
+            <input type="checkbox" id="menu-toggle" class="menu-toggle">
+            <label for="menu-toggle" class="hamburger">&#9776;</label>
+
+            <div class="nav-links">
+                <a class="nav-button" href="index.html">Página Principal</a>
+                <a class="nav-button" href="projetos.html">Projetos</a>
+                <a class="nav-button" href="cadastro.html">Quero Ajudar</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <!-- Formulário compacto e centralizado como no protótipo enviado. -->
+        <section id="cadastro" class="registration-section">
+            <h1>Cadastro de Voluntário</h1>
+            <p>Preencha o formulário abaixo para se tornar um voluntário em nossos projetos.</p>
+            <fieldset>
+                <legend>Formulário de Cadastro</legend>
+                <form action="processar_cadastro.php" method="post">
+                    <div class="form-row"><label for="nome">Nome:</label><input type="text" id="nome" name="nome" required></div>
+                    <div class="form-row"><label for="data-nascimento">Data de Nascimento:</label><input type="date" id="data-nascimento" name="data-nascimento" required></div>
+                    <div class="form-row"><label for="email">Email:</label><input type="email" id="email" name="email" required></div>
+                    <div class="form-row"><label for="cpf">CPF:</label><input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" inputmode="numeric" required></div>
+                    <div class="form-row"><label for="telefone">Telefone:</label><input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}" inputmode="numeric" required></div>
+                    <div class="form-row"><label for="cep">CEP:</label><input type="text" id="cep" name="cep" placeholder="00000-000" pattern="\d{5}-\d{3}" inputmode="numeric" required></div>
+                    <div class="form-row"><label for="endereco">Endereço:</label><input type="text" id="endereco" name="endereco" required></div>
+                    <div class="form-row"><label for="cidade">Cidade:</label><input type="text" id="cidade" name="cidade" required></div>
+                    <div class="form-row"><label for="estado">Estado:</label><input type="text" id="estado" name="estado" required></div>
+                    <fieldset class="interest-group">
+                        <legend>Áreas de Interesse:</legend>
+                        <label><input type="checkbox" name="interesses[]" value="projeto-a"> Projeto A</label>
+                        <label><input type="checkbox" name="interesses[]" value="projeto-b"> Projeto B</label>
+                        <label><input type="checkbox" name="interesses[]" value="projeto-c"> Projeto C</label>
+                    </fieldset>
+                    <input type="submit" value="Enviar">
+                </form>
+            </fieldset>
+        </section>
+        <!-- Badges, alertas, Toast e demonstração do modal --><!-- Badges, alertas, Toast e demonstração do modal -->
+        <div class="feedback-components-test">
+            <section class="feedback-section" aria-labelledby="feedback-title">
+
+                <section class="feedback-group" aria-labelledby="alerts-title">
+                    <h3 id="alerts-title">Alertas</h3>
+                    <div class="feedback-alert feedback-alert--success" role="status">
+                        <span class="feedback-alert__icon" aria-hidden="true">✓</span>
+                        <p><strong>Sucesso:</strong> seus dados foram salvos.</p>
+                    </div>
+                    <div class="feedback-alert feedback-alert--error" role="alert">
+                        <span class="feedback-alert__icon" aria-hidden="true">!</span>
+                        <p><strong>Erro:</strong> não foi possível concluir a operação.</p>
+                    </div>
+                </section>
+
+                <section class="feedback-group" aria-labelledby="toast-title">
+                    <h3 id="toast-title">Notificação toast</h3>
+                    <aside class="feedback-toast" role="status">
+                        <span class="feedback-toast__icon" aria-hidden="true">✓</span>
+                        <div>
+                            <strong>Dados salvos</strong>
+                            <p>Suas alterações foram salvas com sucesso.</p>
+                        </div>
+                    </aside>
+                </section>
+
+                <section class="feedback-group" aria-labelledby="modal-title">
+                    <h3 id="modal-title">Prévia do modal</h3>
+                    <div class="feedback-modal-preview">
+                        <article
+                            class="feedback-modal"
+                            role="dialog"
+                            aria-labelledby="modal-heading"
+                            aria-describedby="modal-description"
+                        >
+                            <h4 id="modal-heading">Alterações salvas</h4>
+                            <p id="modal-description">
+                                Seus dados foram atualizados com sucesso.
+                            </p>
+                            <button class="feedback-modal__close" type="button">Fechar</button>
+                        </article>
+                    </div>
+                </section>
+            </section>
+        </div>
+    </main>
+</body>
+</html>

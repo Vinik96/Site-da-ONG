@@ -1,0 +1,878 @@
+/* ==================== VARIÁVEIS DO PROJETO ==================== */
+:root {
+	--blue: #3977b8;
+	--blue-button: #5d98d9;
+	--blue-hover: #6aa5e4;
+	--yellow: #ffc928;
+	--page-gray: #e5e5e5;
+	--text: #111111;
+	--white: #ffffff;
+	--shadow: 2px 3px 2px rgba(0, 0, 0, .25);
+}
+
+/* ==================== RESET E ELEMENTOS GERAIS ==================== */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	background: var(--page-gray);
+	color: var(--text);
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+img {
+	display: block;
+	max-width: 100%;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+/* O main ocupa toda a largura para que as imagens sejam a própria área visual. */
+main {
+	margin: 0;
+	width: 100%;
+}
+
+/* ==================== INTERATIVIDADE DOS BOTÕES ==================== */
+/* 1. Hover do botão de formulário (o nav-button já tem o dele) */
+input[type="submit"]:hover {
+    background-color: #e5b524; /* Amarelo um pouco mais escuro */
+    transform: translateY(-1px);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+/* 2. Focus: Acessibilidade via teclado para ambos os botões */
+.nav-button:focus,
+input[type="submit"]:focus {
+    outline: 2px solid var(--text);
+    outline-offset: 2px;
+}
+
+/* 3. Active: Efeito visual de ser pressionado / clicado */
+.nav-button:active,
+input[type="submit"]:active {
+    transform: translateY(2px);
+    box-shadow: none;
+}
+
+/* 4. Disabled: Estado inativo / desabilitado */
+.nav-button:disabled,
+input[type="submit"]:disabled {
+    background-color: #a0a0a0;
+    color: #e5e5e5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    opacity: 0.7;
+}
+
+
+/* ==================== VALIDAÇÃO VISUAL DOS FORMULÁRIOS ==================== */
+/* Aplica os efeitos APENAS nos campos de texto/dados, ignorando botões e checkboxes */
+
+/* 1. Focus: Destaque visual enquanto o usuário digita no campo */
+.form-row input:focus {
+    outline: none;
+    border: 2px solid var(--blue-button);
+    background-color: #ffffff;
+}
+
+/* 2. Sucesso: mostra verde depois da interação, se o valor for válido. */
+.form-row input:user-valid {
+    border: 2px solid #28a745;
+    background-color: #f0fff4;
+    color: var(--text);
+}
+
+/* 3. Erro: mostra vermelho depois da interação, se o valor for inválido. */
+.form-row input:user-invalid {
+    border: 2px solid #dc3545;
+    background-color: #fff3f3;
+    color: var(--text);
+}
+
+/* ==================== CABEÇALHO E NAVEGAÇÃO ==================== */
+header {
+	background: var(--blue);
+	min-height: 70px;
+	padding: 18px 18px;
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+}
+
+.navbar {
+	align-items: center;
+	display: grid;
+	gap: 36px;
+	grid-template-columns: 90px 1fr;
+	margin: 0 auto;
+	max-width: 1080px;
+	position: relative;
+}
+
+.logo-link img {
+	height: 72px;
+	object-fit: contain;
+	width: 72px;
+}
+
+.nav-links {
+	align-items: center;
+	display: grid;
+	gap: 34px;
+	grid-template-columns: repeat(3, max-content);
+	justify-content: center;
+}
+
+.nav-button {
+	background: var(--blue-button);
+	border-radius: 10px;
+	box-shadow: var(--shadow);
+	color: var(--white);
+	font-size: 24px;
+	padding: 8px 14px;
+	transition: background-color .2s ease, transform .2s ease;
+}
+
+.nav-button:hover,
+.nav-button.active {
+	background: var(--blue-hover);
+	transform: translateY(-1px);
+}
+
+/* ==================== SUBMENU DROPDOWN (DESKTOP) ==================== */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    display: none; /* Oculto por padrão */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--blue-button);
+    min-width: 160px;
+    box-shadow: var(--shadow);
+    border-radius: 8px;
+    z-index: 10;
+}
+
+.dropdown-menu a {
+    color: var(--white);
+    padding: 10px 14px;
+    display: block;
+}
+
+/* Exibe o submenu ao passar o mouse */
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Esconde o checkbox e o botão hambúrguer em telas grandes */
+.menu-toggle, .hamburger {
+    display: none;
+}
+
+/* ==================== MENU HAMBÚRGUER (MOBILE) ==================== */
+@media (max-width: 767px) {
+	/* A logo fica à esquerda e o controle do menu fica à direita. */
+	.navbar {
+		grid-template-columns: 1fr auto;
+		row-gap: 0;
+	}
+
+	.logo-link {
+		grid-column: 1;
+		grid-row: 1;
+		justify-self: start;
+	}
+
+	.menu-toggle {
+		grid-column: 2;
+		grid-row: 1;
+	}
+
+    /* Exibe o ícone de hambúrguer */
+    .hamburger {
+		display: block;
+		grid-column: 2;
+		grid-row: 1;
+        font-size: 28px;
+        color: var(--white);
+        cursor: pointer;
+		justify-self: end;
+		line-height: 1;
+    }
+
+    /* Oculta os links por padrão em telas menores */
+    .nav-links {
+		display: none;
+		grid-column: 1 / -1;
+		grid-row: 2;
+		grid-template-columns: 1fr;
+		width: 100%;
+		background-color: var(--blue);
+		position: absolute;
+		top: calc(100% + 18px);
+		left: 0;
+		padding: 15px;
+		z-index: 1100;
+    }
+
+    /* Exibe os links quando o hambúrguer (checkbox) for clicado/marcado */
+    .menu-toggle:checked ~ .nav-links {
+		display: grid;
+    }
+
+	.dropdown {
+		display: block;
+		width: 100%;
+	}
+
+	.dropdown > .nav-button {
+		display: block;
+		width: 100%;
+	}
+
+	.dropdown-menu {
+		position: static;
+		width: 100%;
+	}
+}
+
+/* ==================== PÁGINA PRINCIPAL ==================== */
+/* O hero mantém a proporção aproximada de 576 x 241 do protótipo. */
+.hero {
+	aspect-ratio: 576 / 241;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+}
+
+.hero > img {
+	height: 100%;
+	object-fit: cover;
+	width: 100%;
+}
+
+/* Texto de boas-vindas sobre a faixa amarela incorporada à imagem. */
+.hero h1 {
+	color: var(--white);
+	font-size: 48px;
+	font-weight: 500;
+	padding: 10px 26px;
+	position: absolute;
+	right: var(--hero-title-right, 64px);
+	text-align: center;
+	text-shadow: 1px 1px 2px #555;
+	top: var(--hero-title-top, 70px);
+}
+
+/* Cada parágrafo possui posição própria para acompanhar a faixa diagonal. */
+.hero-copy {
+	color: var(--white);
+	font-size: 20px;
+	height: 100%;
+	left: 0;
+	line-height: 10px;
+	position: absolute;
+	text-shadow: 1px 1px 2px #555;
+	top: 0;
+	width: 50%;
+}
+
+.copy-line {
+	margin: 0;
+	position: absolute;
+	text-align: center;
+	white-space: nowrap;
+}
+
+.copy-line-1 { left: 1%; top: 49%; }
+.copy-line-2 { left: 8%; top: 56%; }
+.copy-line-3 { left: 5%; top: 64%; }
+.copy-line-4 { left: 18%; top: 71%; }
+.copy-line-5 { left: 23%; top: 79%; }
+
+/* ==================== PÁGINA DE PROJETOS ==================== */
+.project-grid {
+	display: grid;
+	gap: 20px;
+	grid-template-columns: repeat(12, 1fr);
+	padding: 0 20px;
+}
+
+.project-card {
+	aspect-ratio: 192 / 241;
+	background: #222;
+	grid-column: span 12;
+	overflow: hidden;
+	position: relative;
+}
+
+.project-card > img {
+	display: block;
+	object-fit: cover;
+	position: absolute;
+	width: 100%;
+}
+
+.project-content {
+	bottom: 175px;
+	left: 0;
+	position: absolute;
+	right: 0;
+	text-align: center;
+}
+
+/* O título cresce junto com o padding para manter o botão equilibrado. */
+.project-content h1 {
+	background: rgba(74, 143, 211, .8);
+	border-radius: 12px;
+	color: var(--white);
+	display: table;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: clamp(1.1rem, 2vw, 1.45rem);
+	font-weight: 400;
+	margin: 0 auto 8px;
+	padding: 12px 42px;
+}
+
+/* A descrição tem escala menor e padding proporcional ao seu tamanho. */
+.project-content p {
+	background: rgba(220, 161, 0, .85);
+	border-radius: 10px;
+	color: var(--white);
+	display: table;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: clamp(.85rem, 1.35vw, 1rem);
+	font-weight: 400;
+	margin: 0 auto;
+	padding: 8px 12px;
+}
+
+/* ==================== PÁGINA DE CADASTRO ==================== */
+.registration-section {
+	background: var(--page-gray);
+	min-height: calc(100vh - 70px);
+	padding: 10px 8px;
+	text-align: center;
+}
+
+.registration-section > h1 {
+	background: rgba(243, 180, 5, .85);
+	border: 1px solid rgba(243, 180, 5, .85);
+	border-radius: 4px;
+	color: rgba(99, 74, 7, 0.85);
+	display: inline-block;
+	font-size: 14px;
+	font-weight: 400;
+	padding: 1px 4px;
+}
+
+.registration-section > p {
+	font-size: 14px;
+	margin-bottom: 2px;
+}
+
+.registration-section > fieldset {
+	border: 3px solid var(--text);
+	border-radius: 6px;
+	min-height: 325px;
+	padding: 5px 12px;
+}
+
+.registration-section > fieldset > legend {
+	font-size: 12px;
+	padding: 0 2px;
+	text-align: left;
+}
+
+form {
+	margin: 10px auto 0;
+	max-width: 390px;
+}
+
+.form-row {
+	align-items: center;
+	display: grid;
+	grid-template-columns: 145px 1fr;
+	margin-bottom: 8px;
+	text-align: right;
+}
+
+.form-row label {
+	font-size: 14px;
+	padding-right: 6px;
+}
+
+input {
+	background: #eee;
+	border: 1px solid #ccc;
+	border-radius: 2px;
+	font: inherit;
+	font-size: 14px;
+	height: 18px;
+	padding: 1px 4px;
+}
+
+.interest-group {
+	border: 0;
+	display: flex;
+	flex-direction: column;
+	font-size: 14px;
+	margin: 2px auto 5px;
+	text-align: left;
+	width: 115px;
+}
+
+.interest-group legend {
+	font-size: 15px;
+	white-space: nowrap;
+}
+
+.interest-group label {
+	align-items: center;
+	display: flex;
+	gap: 12px;
+}
+
+.interest-group input {
+	height: 14px;
+	width: 14px;
+}
+
+input[type="submit"] {
+	background: var(--yellow);
+	border: 0;
+	color: var(--white);
+	cursor: pointer;
+	font-size: 14px;
+	height: auto;
+	padding: 1px 4px;
+}
+
+/* ==================== RESPONSIVIDADE ==================== */
+/* Base: uma coluna para garantir leitura em qualquer tela pequena. */
+.nav-links {
+	grid-template-columns: 1fr;
+	gap: 8px;
+}
+
+.nav-button {
+	font-size: 24px;
+	padding: 8px 7px;
+	text-align: center;
+}
+
+.navbar {
+	gap: 10px;
+	grid-template-columns: 90px 1fr;
+}
+
+
+.project-card {
+	min-height: 380px;
+}
+
+.form-row {
+	grid-template-columns: 1fr;
+	text-align: left;
+}
+
+.form-row label {
+	padding-bottom: 3px;
+	text-align: left;
+}
+
+/* 1. Dispositivos móveis pequenos: até 359px (320 × 568), navegação empilhada e cartões largos. */
+@media (max-width: 359px) {
+	.navbar {
+		grid-template-columns: 1fr auto;
+	}
+
+	.nav-links {
+		grid-template-columns: 1fr;
+		padding: 10px 0;
+	}
+
+	.hero h1 {
+		font-size: 11px;
+		--hero-title-right: -8%;
+		--hero-title-top: 2%;
+	}
+
+	.hero-copy {
+		font-size: 8px;
+	}
+
+	.project-grid {
+		padding: 0 8px;
+	}
+}
+
+/* 2. Móveis em paisagem e tablets pequenos: 360px a 767px (667 × 375), dois cartões por linha. */
+@media (min-width: 360px) and (max-width: 767px) {
+	.navbar {
+		grid-template-columns: 1fr auto;
+	}
+
+	.nav-links {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.project-card {
+		grid-column: span 6;
+		min-height: 0;
+	}
+
+	.project-grid {
+		padding: 0 10px;
+	}
+
+	.hero h1 {
+		font-size: 22px;
+		--hero-title-right: -2%;
+		--hero-title-top: 6%;
+	}
+
+	.hero-copy {
+		font-size: 17px;
+	}
+}
+
+/* 3. Tablets tradicionais: 768px a 1199px (768 × 1024), três cartões por linha. */
+@media (min-width: 768px) and (max-width: 1199px) {
+	.navbar {
+		grid-template-columns: 90px 1fr;
+	}
+
+	.nav-links {
+		grid-template-columns: repeat(3, max-content);
+	}
+
+	.project-card {
+		grid-column: span 4;
+		min-height: 0;
+	}
+
+	.form-row {
+		grid-template-columns: 145px 1fr;
+		text-align: right;
+	}
+
+	.form-row label {
+		padding-bottom: 0;
+		text-align: right;
+	}
+
+	.hero h1 {
+		font-size: 24px;
+		--hero-title-right: -2%;
+		--hero-title-top: 6%;
+	}
+
+	.hero-copy {
+		font-size: 19px;
+	}
+}
+
+/* 4. Desktops e laptops convencionais: 1200px a 1599px (1366 × 768), três cartões espaçosos. */
+@media (min-width: 1200px) and (max-width: 1599px) {
+	.navbar {
+		grid-template-columns: 90px 1fr;
+	}
+
+	.nav-links {
+		grid-template-columns: repeat(3, max-content);
+	}
+
+	.project-grid {
+		gap: 0;
+		padding: 0;
+	}
+
+	.project-card {
+		grid-column: span 4;
+		min-height: 0;
+	}
+
+	.form-row {
+		grid-template-columns: 145px 1fr;
+		text-align: right;
+	}
+
+	.form-row label {
+		padding-bottom: 0;
+		text-align: right;
+	}
+
+	.hero h1 {
+		font-size: 40px;
+		--hero-title-right: 32px;
+		--hero-title-top: 50px;
+	}
+
+	.hero-copy {
+		font-size: 32px;
+	}
+}
+
+/* 5. Desktops panorâmicos: a partir de 1600px (1920 × 1080), limita o conteúdo para não esticar demais. */
+@media (min-width: 1600px) {
+	.navbar,
+	.project-grid {
+		max-width: 1440px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.nav-links {
+		grid-template-columns: repeat(3, max-content);
+	}
+
+	.project-grid {
+		gap: 0;
+		padding: 0;
+	}
+
+	.project-card {
+		grid-column: span 4;
+		min-height: 0;
+	}
+
+	.form-row {
+		grid-template-columns: 145px 1fr;
+		text-align: right;
+	}
+
+	.form-row label {
+		padding-bottom: 0;
+		text-align: right;
+	}
+
+	.hero h1 {
+		font-size: 54px;
+		--hero-title-right: 60px;
+		--hero-title-top: 70px;
+	}
+
+	.hero-copy {
+		font-size: 38px;
+	}
+}
+
+/* Os componentes ficam isolados para não alterar os estilos das outras páginas. */
+.feedback-components-test {
+    --feedback-blue: var(--blue, #3977b8);
+    --feedback-blue-light: var(--blue-button, #5d98d9);
+    --feedback-yellow: var(--yellow, #ffc928);
+    --feedback-text: var(--text, #111111);
+    --feedback-white: #ffffff;
+
+    color: var(--feedback-text);
+    font-family: Arial, Helvetica, sans-serif;
+    /* Mantém a demonstração abaixo do formulário, sem encobrir campos interativos. */
+    margin: 32px auto;
+    max-width: 900px;
+    padding: 5px;
+}
+
+.feedback-section {
+    display: grid;
+    gap: 24px;
+}
+
+.feedback-section h2 {
+    font-size: 28px;
+}
+
+.feedback-group {
+    display: grid;
+    gap: 12px;
+}
+
+.feedback-group h3 {
+    font-size: 18px;
+}
+
+/* Badges usam cores semânticas; azul e amarelo mantêm relação com a paleta do site. */
+.feedback-badges {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.feedback-badge {
+    border-radius: 6px;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 4px 12px;
+	position: relative;
+	left: var(--badge-offset-x, 0);
+	top: var(--badge-offset-y, 0);
+}
+
+.feedback-badge--new {
+    background: #e6f2ff;
+    color: var(--feedback-blue);
+	--badge-offset-x: 0;
+	--badge-offset-y: -6px;
+}
+
+.feedback-badge--pending {
+    background: #fff4d6;
+    color: #805b00;
+	--badge-offset-x: 0;
+	--badge-offset-y: -6px;
+}
+
+.feedback-badge--complete {
+    background: #e6f4ea;
+    color: #246b36;
+	--badge-offset-x: 0;
+	--badge-offset-y: -6px;
+}
+
+/* Alertas ocupam toda a largura disponível e mantêm ícone e mensagem alinhados. */
+.feedback-alert {
+    align-items: center;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    display: grid;
+    gap: 12px;
+    grid-template-columns: auto 1fr;
+    padding: 14px 16px;
+    width: 100%;
+}
+
+.feedback-alert p,
+.feedback-toast p {
+    margin: 0;
+}
+
+.feedback-alert--success {
+    background: #eaf5ed;
+    border-color: #a8d5b2;
+    color: #246b36;
+}
+
+.feedback-alert--error {
+    background: #fcebea;
+    border-color: #e6aaa7;
+    color: #9f2d28;
+}
+
+.feedback-alert__icon {
+    align-items: center;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    display: inline-grid;
+    font-weight: 700;
+    height: 24px;
+    justify-items: center;
+    width: 24px;
+}
+
+/* Toast demonstrativo fixado no canto inferior direito da janela. */
+.feedback-toast {
+    align-items: start;
+    background: var(--feedback-white);
+    border-left: 5px solid #2e7d32;
+    border-radius: 6px;
+    bottom: 24px;
+    box-shadow: 0 8px 24px rgb(0 0 0 / 18%);
+    display: grid;
+    gap: 12px;
+    grid-template-columns: auto 1fr;
+    max-width: min(360px, calc(100vw - 32px));
+    padding: 16px;
+    position: fixed;
+    right: 24px;
+    z-index: 1200;
+}
+
+.feedback-toast__icon {
+    color: #2e7d32;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* Área escurecida de demonstração mantém o modal visível sem cobrir a galeria. */
+.feedback-modal-preview {
+    align-items: center;
+    background: rgb(0 0 0 / 62%);
+    border-radius: 8px;
+    display: grid;
+    justify-items: center;
+    min-height: 280px;
+    padding: 24px;
+}
+
+.feedback-modal {
+    background: var(--feedback-white);
+    border-radius: 8px;
+    box-shadow: 0 16px 40px rgb(0 0 0 / 25%);
+    display: grid;
+    gap: 16px;
+    max-width: 420px;
+    padding: 24px;
+    width: 100%;
+}
+
+.feedback-modal h4 {
+    font-size: 22px;
+}
+
+.feedback-modal p {
+    line-height: 1.5;
+}
+
+.feedback-modal__close {
+    background: var(--feedback-blue);
+    border: 0;
+    border-radius: 5px;
+    color: var(--feedback-white);
+    cursor: pointer;
+    justify-self: end;
+    padding: 10px 18px;
+}
+
+.feedback-modal__close:hover {
+    background: var(--feedback-blue-light);
+}
+
+.feedback-modal__close:focus-visible {
+    outline: 3px solid var(--feedback-yellow);
+    outline-offset: 3px;
+}
+
+/* Em telas estreitas, o conteúdo usa menos espaço lateral e o toast acompanha a margem. */
+@media (max-width: 480px) {
+    .feedback-components-test {
+        padding: 16px;
+    }
+
+    .feedback-toast {
+        bottom: 12px;
+        right: 12px;
+    }
+
+    .feedback-modal-preview {
+        padding: 16px;
+    }
+}

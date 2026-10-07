@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nossa ONG</title>
+
+    <!-- O CSS usa o nome real do arquivo existente na pasta css. -->
+    <link rel="stylesheet" href="css/style.css" media="all">
+</head>
+<body>
+    <!-- Cabeçalho compartilhado entre as páginas, inspirado no layout do Figma. -->
+    <header>
+        <nav class="navbar">
+            <a class="logo-link" href="index.html">
+                <img src="imagens/estrela.png" alt="Logo">
+            </a>
+
+            <!-- Botão Hambúrguer para Mobile -->
+            <input type="checkbox" id="menu-toggle" class="menu-toggle">
+            <label for="menu-toggle" class="hamburger">&#9776;</label>
+
+            <div class="nav-links">
+                <a class="nav-button active" href="index.html">Página Principal</a>
+                <a class="nav-button" href="projetos.html">Projetos</a>
+                <a class="nav-button" href="cadastro.html">Quero Ajudar</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <!-- Hero principal: esta imagem já inclui as faixas amarelas do protótipo. -->
+        <section id="home" class="hero" aria-labelledby="titulo-home">
+            <img src="imagens/home-fundo-2.png" alt="Adulto e criança plantando uma muda juntos">
+            <h1 id="titulo-home">Bem-vindo à Nossa ONG</h1>
+            <!-- Cada linha é independente para acompanhar a inclinação da faixa amarela. -->
+            <div class="hero-copy" aria-label="Mensagem da ONG">
+                <p class="copy-line copy-line-1">Somos uma</p>
+                <p class="copy-line copy-line-2">organização</p>
+                <p class="copy-line copy-line-3">dedicada a fazer</p>
+                <p class="copy-line copy-line-4">a diferença na</p>
+                <p class="copy-line copy-line-5">vida das pessoas.</p>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
