@@ -24,6 +24,8 @@
           feedback.openModal();
         } else {
           feedback.showAlert(feedback.errorAlert);
+          const firstInvalidField = fields.find(field => field.input.getAttribute('aria-invalid') === 'true');
+          firstInvalidField?.input.focus();
         }
       });
     }

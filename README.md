@@ -35,6 +35,8 @@ A navegação é feita por links HTML convencionais. Não há roteador, renderiz
 - Layout responsivo para celulares, tablets e desktops.
 - Máscaras de entrada para CPF, telefone e CEP.
 - Validação de campos do formulário e mensagens junto aos campos inválidos.
+- Erros associados aos campos com `aria-invalid` e `aria-describedby`, com foco direcionado ao primeiro campo inválido.
+- Indicadores de foco visíveis nos campos e no diálogo do cadastro.
 - Toast temporário quando um campo válido perde o foco.
 - Alertas de sucesso ou erro abaixo do formulário.
 - Modal exibido quando todos os campos passam pela validação no navegador.
@@ -162,7 +164,7 @@ Get-ChildItem .\js\*.js -File | ForEach-Object {
 Faça também uma verificação manual no navegador:
 
 1. Abra as três páginas e teste a navegação e o menu em larguras de celular e desktop.
-2. Na página de cadastro, envie o formulário vazio e confirme o alerta de erro e as mensagens nos campos.
+2. Na página de cadastro, envie o formulário vazio e confirme o alerta, o foco no primeiro erro e os atributos `aria-invalid`/`aria-describedby` dos campos.
 3. Preencha dados fictícios válidos e confira as máscaras, o toast ao sair de um campo e seu desaparecimento após alguns segundos.
 4. Envie o formulário válido e confira o alerta abaixo do formulário, a abertura do modal e o fechamento pelo botão ou pela tecla `Esc`.
 5. Recarregue a página e confirme que os campos preenchidos foram restaurados do rascunho local.

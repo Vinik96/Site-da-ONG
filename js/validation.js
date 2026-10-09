@@ -23,16 +23,33 @@
 
     if (!message) {
       message = document.createElement('span');
+      message.id = `${input.id}-error`;
       message.className = 'mensagem-validacao texto-erro';
       container.appendChild(message);
     }
 
     message.textContent = text;
+    input.setAttribute('aria-invalid', 'true');
+    const descriptionIds = (input.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean);
+    if (!descriptionIds.includes(message.id)) {
+      input.setAttribute('aria-describedby', [...descriptionIds, message.id].join(' '));
+    }
   }
 
   function clearMessage(input) {
     const message = input.parentElement.querySelector('.mensagem-validacao');
-    if (message) message.remove();
+    if (message) {
+      const descriptionIds = (input.getAttribute('aria-describedby') || '')
+        .split(/\s+/)
+        .filter(id => id && id !== message.id);
+      if (descriptionIds.length) {
+        input.setAttribute('aria-describedby', descriptionIds.join(' '));
+      } else {
+        input.removeAttribute('aria-describedby');
+      }
+      message.remove();
+    }
+    input.setAttribute('aria-invalid', 'false');
   }
 
   function validateField(field) {

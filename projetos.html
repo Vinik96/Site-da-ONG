@@ -7,6 +7,7 @@
 
     <!-- O CSS usa o nome real do arquivo existente na pasta css. -->
     <link rel="stylesheet" href="css/style.css" media="all">
+    <script src="js/navigation.js" defer></script>
 </head>
 <body>
     <!-- Cabeçalho compartilhado entre as páginas, inspirado no layout do Figma. -->
@@ -16,11 +17,11 @@
                 <img src="imagens/estrela.png" alt="Logo">
             </a>
 
-            <!-- Botão Hambúrguer para Mobile -->
-            <input type="checkbox" id="menu-toggle" class="menu-toggle">
-            <label for="menu-toggle" class="hamburger">&#9776;</label>
+            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="Abrir menu principal">
+                <span aria-hidden="true">&#9776;</span>
+            </button>
 
-            <div class="nav-links">
+            <div class="nav-links" id="primary-navigation">
                 <a class="nav-button" href="index.html">Página Principal</a>
                 <a class="nav-button active" href="projetos.html">Projetos</a>
                 <a class="nav-button" href="cadastro.html">Quero Ajudar</a>

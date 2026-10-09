@@ -5,6 +5,7 @@
 	--color-brand-hover: #6aa5e4;
 	--color-accent: #ffc928;
 	--color-accent-hover: #e5b524;
+	--color-focus: #111111;
 	--color-surface: #e5e5e5;
 	--color-surface-raised: #ffffff;
 	--color-surface-muted: #eeeeee;
@@ -90,11 +91,19 @@ input[type="submit"]:hover {
     transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-/* 2. Focus: Acessibilidade via teclado para ambos os botões */
+/* Foco de teclado dos links de navegação e botões de formulário. */
 .nav-button:focus,
 input[type="submit"]:focus {
 	outline: 2px solid var(--color-text);
-    outline-offset: 2px;
+	outline-offset: 2px;
+}
+
+/* Mantém um indicador forte nos campos e no diálogo do cadastro. */
+input:focus-visible,
+.menu-toggle:focus-visible,
+.feedback-modal__close:focus-visible {
+	outline: 3px solid var(--color-focus);
+	outline-offset: 3px;
 }
 
 /* 3. Active: Efeito visual de ser pressionado / clicado */
@@ -121,9 +130,28 @@ input[type="submit"]:disabled {
 
 /* 1. Focus: Destaque visual enquanto o usuário digita no campo */
 .form-row input:focus {
-    outline: none;
 	border: 2px solid var(--color-brand-button);
 	background-color: var(--color-surface-input);
+}
+
+.form-row input.input-erro {
+	border: 2px solid var(--color-error);
+	background-color: var(--color-error-surface);
+}
+
+.form-hint,
+.mensagem-validacao {
+	font-size: 12px;
+	grid-column: 1 / -1;
+	text-align: left;
+}
+
+.form-hint {
+	color: var(--color-text-muted);
+}
+
+.mensagem-validacao {
+	color: var(--color-error-dark);
 }
 
 /* 2. Sucesso: mostra verde depois da interação, se o valor for válido. */
@@ -219,8 +247,8 @@ header {
     display: block;
 }
 
-/* Esconde o checkbox e o botão hambúrguer em telas grandes */
-.menu-toggle, .hamburger {
+/* O botão de menu aparece apenas em telas estreitas. */
+.menu-toggle {
     display: none;
 }
 
@@ -239,21 +267,20 @@ header {
 	}
 
 	.menu-toggle {
-		grid-column: 2;
-		grid-row: 1;
-	}
-
-    /* Exibe o ícone de hambúrguer */
-    .hamburger {
-		display: block;
-		grid-column: 2;
-		grid-row: 1;
-        font-size: 28px;
+		align-items: center;
+		background: transparent;
+		border: 0;
 		color: var(--color-text-inverse);
-        cursor: pointer;
-		justify-self: end;
-		line-height: 1;
-    }
+		cursor: pointer;
+		display: grid;
+		font-size: 28px;
+		grid-column: 2;
+		grid-row: 1;
+		height: 44px;
+		justify-items: center;
+		padding: 0;
+		width: 44px;
+	}
 
     /* Oculta os links por padrão em telas menores */
     .nav-links {
@@ -270,8 +297,8 @@ header {
 		z-index: 1100;
     }
 
-    /* Exibe os links quando o hambúrguer (checkbox) for clicado/marcado */
-    .menu-toggle:checked ~ .nav-links {
+		/* Exibe os links quando o botão anuncia o estado expandido. */
+		.menu-toggle[aria-expanded="true"] ~ .nav-links {
 		display: grid;
     }
 
@@ -502,7 +529,7 @@ input {
 input[type="submit"] {
 	background: var(--color-accent);
 	border: 0;
-	color: var(--color-text-inverse);
+	color: var(--color-text);
 	cursor: pointer;
 	font-size: 14px;
 	height: auto;
@@ -921,7 +948,7 @@ input[type="submit"] {
 }
 
 .feedback-modal__close:focus-visible {
-	outline: 3px solid var(--color-accent);
+	outline: 3px solid var(--color-focus);
     outline-offset: 3px;
 }
 
