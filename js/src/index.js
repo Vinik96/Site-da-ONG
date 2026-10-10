@@ -1,0 +1,9 @@
+import '../../css/style.css';
+import '../navigation.js';
+import '../theme.js';
+import '../masks.js';
+import '../validation.js';
+import '../draftStorage.js';
+import '../feedback.js';
+import '../registrationForm.js';
+import '../JavaScript.js';

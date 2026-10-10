@@ -1,6 +1,6 @@
 # Site da ONG
 
-Site institucional estático de uma organização não governamental, com páginas de apresentação, projetos e cadastro de voluntários. A interface é feita com HTML, CSS e JavaScript no navegador, sem framework, servidor de aplicação ou processo de compilação obrigatório.
+Site institucional estático de uma organização não governamental, com páginas de apresentação, projetos e cadastro de voluntários. A interface é feita com HTML, CSS e JavaScript no navegador, sem framework ou servidor de aplicação. O Webpack gera uma versão otimizada para produção.
 
 ## Conteúdo
 
@@ -14,7 +14,7 @@ Site institucional estático de uma organização não governamental, com págin
 - [Execução local](#execucao-local)
 - [Cadastro e armazenamento](#cadastro-e-armazenamento)
 - [Limitações e privacidade](#limitacoes-e-privacidade)
-- [Build](#build)
+- [Build de produção](#build-de-producao)
 - [Testes](#testes)
 
 ## Visão geral
@@ -46,29 +46,37 @@ A navegação é feita por links HTML convencionais. Não há roteador, renderiz
 ## Tecnologias e arquitetura
 
 - HTML5 para a estrutura das páginas.
-- CSS3 para estilos, variáveis de cores e espaçamento, componentes e breakpoints responsivos.
-- JavaScript sem framework para máscaras, validação, persistência local e feedback.
+- CSS3 para estilos, variáveis de cores e espaçamento, componentes e breakpoints responsivos; o Webpack processa e extrai o CSS.
+- JavaScript sem framework para máscaras, validação, persistência local e feedback; o Webpack reúne os módulos e minimiza o bundle de produção.
+- `html-webpack-plugin` gera e minifica as três páginas HTML; `sharp` converte os PNGs originais para WebP durante a cópia para `dist/`, e as páginas geradas apontam para os arquivos convertidos.
 - IMask carregado pelo CDN `https://unpkg.com/imask` e usado na página de cadastro.
 
-Os scripts do cadastro usam o namespace global `OngCadastro` e são carregados com `defer` na ordem necessária. `js/JavaScript.js` é o ponto de entrada e inicializa `registrationForm` depois que o documento está disponível.
+Os módulos do cadastro usam o namespace global `OngCadastro`. `js/src/index.js` importa os scripts na ordem necessária; `js/JavaScript.js` inicializa `registrationForm` depois que o documento está disponível.
 
 ## Estrutura do projeto
 
 ```text
 .
 |-- README.md
+|-- package.json
+|-- package-lock.json
 |-- index.html
 |-- projetos.html
 |-- cadastro.html
 |-- css/
 |   `-- style.css
 |-- js/
+|   |-- src/
+|   |   `-- index.js            # Entrada do bundle Webpack
 |   |-- JavaScript.js       # Ponto de entrada; inicialização
 |   |-- registrationForm.js # Coordenação do formulário e eventos
 |   |-- masks.js            # Máscaras de CPF, telefone e CEP
+|   |-- theme.js            # Alternância e persistência do tema
 |   |-- validation.js       # Regras e mensagens de validação
 |   |-- draftStorage.js     # Rascunho salvo no localStorage
 |   `-- feedback.js         # Alertas, toast e modal
+|-- webpack/
+|   `-- webpack.config.js
 `-- imagens/
     |-- estrela.png
     |-- home-fundo.png
@@ -84,15 +92,19 @@ Os scripts do cadastro usam o namespace global `OngCadastro` e são carregados c
 - Navegador moderno com suporte a HTML5, CSS Grid, `localStorage` e ao elemento `<dialog>`.
 - Conexão com a internet para carregar o IMask pelo CDN na página de cadastro.
 - Opcional: Python 3 para iniciar um servidor HTTP local.
-- Opcional: Node.js para verificar a sintaxe dos arquivos JavaScript.
+- Node.js e npm para instalar as dependências e gerar o build.
 
-Não é necessário instalar um framework, gerenciador de pacotes ou servidor backend para visualizar as páginas.
+Não é necessário instalar um framework ou servidor backend para visualizar as páginas.
 
 ## Instalação de dependências
 
-Não há dependências locais declaradas e o projeto não contém `package.json`. Portanto, não é necessário executar `npm install` ou outro comando de instalação.
+Na raiz do projeto, instale as dependências registradas no `package-lock.json` com:
 
-A página de cadastro obtém a biblioteca IMask diretamente do CDN declarado em `cadastro.html`. Ela precisa de acesso à internet. Sem conexão, o formulário continua disponível, mas as máscaras de CPF, telefone e CEP não serão aplicadas.
+```powershell
+npm ci
+```
+
+A página de cadastro obtém a biblioteca IMask pelo CDN declarado em `cadastro.html`. Ela precisa de acesso à internet; sem conexão, as máscaras de CPF, telefone e CEP não serão aplicadas.
 
 ## Execução local
 
@@ -126,43 +138,34 @@ localStorage.removeItem('meuRascunho');
 
 Não use dados pessoais reais em testes. Antes de publicar um cadastro funcional, implemente um backend seguro, validação no servidor, política de privacidade e tratamento apropriado desses dados.
 
-## Build
+## Build de produção
 
-Não há bundler nem etapa de compilação configurados. Os arquivos HTML, CSS, JavaScript e imagens podem ser publicados diretamente. O comando abaixo cria uma pasta `dist` com uma cópia estática do site; ele não transpila, otimiza ou minifica os arquivos.
+O Webpack está configurado em `webpack/webpack.config.js`. A entrada `js/src/index.js` importa os estilos e os módulos JavaScript na ordem necessária. No desenvolvimento, o `style-loader` injeta o CSS; no build de produção, o `mini-css-extract-plugin` o extrai e o `css-minimizer-webpack-plugin` o minifica. O Webpack também minimiza o JavaScript, enquanto `html-webpack-plugin` gera e minifica as três páginas HTML. Durante a compilação, `sharp` converte os PNGs originais para WebP com qualidade 82, e as páginas compiladas são atualizadas para carregar essas versões. Os PNGs-fonte não são alterados. O resultado pronto para publicação fica em `dist/`.
 
-Execute no PowerShell, a partir da raiz do projeto:
-
-```powershell
-New-Item -ItemType Directory -Force -Path .\dist, .\dist\css, .\dist\js, .\dist\imagens | Out-Null
-Copy-Item -Path .\index.html, .\projetos.html, .\cadastro.html -Destination .\dist -Force
-Copy-Item -Path .\css\* -Destination .\dist\css -Recurse -Force
-Copy-Item -Path .\js\* -Destination .\dist\js -Recurse -Force
-Copy-Item -Path .\imagens\* -Destination .\dist\imagens -Recurse -Force
-```
-
-Para servir a cópia, execute:
+Na raiz do projeto, execute:
 
 ```powershell
-Set-Location .\dist
-py -m http.server 8000
+npm run build
 ```
 
-Depois acesse `http://localhost:8000/`.
+Para compilar sem as otimizações de produção ou recompilar automaticamente ao alterar os arquivos:
+
+```powershell
+npm run dev
+npm run watch
+```
+
+Para testar a versão de produção, sirva a pasta `dist/` por HTTP:
+
+```powershell
+py -m http.server 8000 --directory .\dist
+```
+
+Abra `http://localhost:8000/`. Repita `npm run build` depois de alterar o código ou as imagens para atualizar os arquivos minificados e WebP.
 
 ## Testes
 
-O repositório não possui suíte automatizada, framework de testes ou comando `npm test`. O comando abaixo verifica erros de sintaxe nos scripts JavaScript; ele requer Node.js e não substitui testes de comportamento:
-
-```powershell
-Get-ChildItem .\js\*.js -File | ForEach-Object {
-    node --check $_.FullName
-    if ($LASTEXITCODE -ne 0) {
-        throw "Erro de sintaxe em $($_.Name)"
-    }
-}
-```
-
-Faça também uma verificação manual no navegador:
+O repositório ainda não possui uma suíte automatizada. Depois de instalar as dependências, valide a compilação com `npm run build` e confira a versão gerada no navegador:
 
 1. Abra as três páginas e teste a navegação e o menu em larguras de celular e desktop.
 2. Na página de cadastro, envie o formulário vazio e confirme o alerta, o foco no primeiro erro e os atributos `aria-invalid`/`aria-describedby` dos campos.
