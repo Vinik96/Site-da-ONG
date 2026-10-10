@@ -50,6 +50,47 @@
 	--space-8: 36px;
 }
 
+[data-theme="dark"] {
+	color-scheme: dark;
+	--color-brand: #5d98d9;
+	--color-brand-button: #3977b8;
+	--color-brand-hover: #7ab0ed;
+	--color-accent: #ffd54f;
+	--color-accent-hover: #ffc928;
+	--color-focus: #ffffff;
+	--color-surface: #121212;
+	--color-surface-raised: #1e1e1e;
+	--color-surface-muted: #252525;
+	--color-surface-input: #1e1e1e;
+	--color-text: #f3f3f3;
+	--color-text-inverse: #111111;
+	--color-text-muted: #b0b0b0;
+	--color-border: #444444;
+	--color-disabled: #666666;
+	--color-success: #4caf50;
+	--color-success-dark: #81c784;
+	--color-success-strong: #81c784;
+	--color-success-surface: #1b3320;
+	--color-success-soft: #1b3320;
+	--color-success-alert: #1b3320;
+	--color-success-border: #4caf50;
+	--color-error: #ff5252;
+	--color-error-dark: #e57373;
+	--color-error-surface: #3b1c1d;
+	--color-error-alert: #3b1c1d;
+	--color-error-border: #ff5252;
+	--color-pending: #ffb300;
+	--color-pending-surface: #332700;
+	--color-new-surface: #112233;
+	--color-card-overlay: #000000;
+	--color-project-title: rgb(110 180 250 / 90%);
+	--color-project-description: rgb(255 193 7 / 90%);
+	--color-registration-title: rgb(255 215 0 / 90%);
+	--color-registration-title-text: rgb(20 15 0 / 90%);
+	--color-scrim: rgb(0 0 0 / 80%);
+	--color-shadow: rgb(0 0 0 / 60%);
+}
+
 /* ==================== RESET E ELEMENTOS GERAIS ==================== */
 * {
 	box-sizing: border-box;
@@ -198,7 +239,7 @@ header {
 	align-items: center;
 	display: grid;
 	gap: var(--space-8);
-	grid-template-columns: repeat(3, max-content);
+	grid-template-columns: repeat(4, max-content);
 	justify-content: center;
 }
 
@@ -210,6 +251,12 @@ header {
 	font-size: 24px;
 	padding: var(--space-2) 14px;
 	transition: background-color .2s ease, transform .2s ease;
+}
+
+.theme-toggle {
+	border: 0;
+	cursor: pointer;
+	font-family: inherit;
 }
 
 .nav-button:hover,
@@ -491,9 +538,10 @@ form {
 }
 
 input {
-	background: var(--color-surface-muted);
+	background: var(--color-surface-input);
 	border: 1px solid var(--color-border);
 	border-radius: 2px;
+	color: var(--color-text);
 	font: inherit;
 	font-size: 14px;
 	height: 18px;
@@ -602,7 +650,7 @@ input[type="submit"] {
 	}
 
 	.nav-links {
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(2, 1fr);
 	}
 
 	.project-card {
@@ -632,7 +680,7 @@ input[type="submit"] {
 	}
 
 	.nav-links {
-		grid-template-columns: repeat(3, max-content);
+		grid-template-columns: repeat(4, max-content);
 	}
 
 	.project-card {
@@ -668,7 +716,7 @@ input[type="submit"] {
 	}
 
 	.nav-links {
-		grid-template-columns: repeat(3, max-content);
+		grid-template-columns: repeat(4, max-content);
 	}
 
 	.project-grid {
@@ -712,7 +760,7 @@ input[type="submit"] {
 	}
 
 	.nav-links {
-		grid-template-columns: repeat(3, max-content);
+		grid-template-columns: repeat(4, max-content);
 	}
 
 	.project-grid {

@@ -32,6 +32,7 @@ A navegação é feita por links HTML convencionais. Não há roteador, renderiz
 ## Funcionalidades
 
 - Navegação compartilhada entre as páginas, incluindo menu adaptado para telas menores.
+- Modo escuro com paleta própria, seleção persistente entre as páginas e controle acessível na navegação.
 - Layout responsivo para celulares, tablets e desktops.
 - Máscaras de entrada para CPF, telefone e CEP.
 - Validação de campos do formulário e mensagens junto aos campos inválidos.
